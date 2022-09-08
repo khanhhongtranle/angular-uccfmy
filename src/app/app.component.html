@@ -2,6 +2,7 @@
   id="user-form"
   [formGroup]="userForm"
   (ngSubmit)="createUser(userForm.value)"
+  #ngForm="ngForm"
 >
   <h3>Create New User</h3>
   <label for="username-input">Username</label>
@@ -94,4 +95,6 @@
   >
     Submit
   </button>
+
+  <span *ngIf="ngForm.submitted">{{result}}</span>
 </form>

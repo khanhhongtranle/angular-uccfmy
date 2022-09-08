@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   public userForm: FormGroup;
   public userTypes = ['user', 'admin'];
   public submitting = false;
+  public result = '';
 
   constructor(private fb: FormBuilder) {
     this.userForm = this.fb.group({
@@ -75,11 +76,12 @@ export class AppComponent implements OnInit {
       this.userForm.markAsPristine();
       this.userForm.markAsUntouched();
       this.submitting = false;
+      this.result = 'Something was wrong. Please try again!';
       return Promise.reject('Request Failed');
     }
     // Backend call happening here.
     this.submitting = false;
-    console.log('Request successful');
+    this.result = 'Create user successful';
     return { username: user.username, email: user.email, type: user.type };
   }
 }
