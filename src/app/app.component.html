@@ -1,0 +1,97 @@
+<form
+  id="user-form"
+  [formGroup]="userForm"
+  (ngSubmit)="createUser(userForm.value)"
+>
+  <h3>Create New User</h3>
+  <label for="username-input">Username</label>
+  <input
+    id="username-input"
+    type="text"
+    formControlName="username"
+    name="username"
+  />
+  <div
+    class="errors"
+    *ngIf="
+      !userForm.controls.username.valid &&
+      (userForm.controls.username.dirty || userForm.controls.username.touched)
+    "
+  >
+    <p *ngIf="userForm.controls.username.errors.required">
+      Username is required.
+    </p>
+    <p *ngIf="userForm.controls.username.errors.hasOwnProperty('minlength')">
+      Username's min length is
+      {{ userForm.controls.username.errors.minlength.requiredLength }}
+      characters.
+    </p>
+    <p *ngIf="userForm.controls.username.errors.hasOwnProperty('maxlength')">
+      Username's max length is
+      {{ userForm.controls.username.errors.maxlength.requiredLength }}
+      characters.
+    </p>
+  </div>
+
+  <label for="email-input">Email</label>
+  <input id="email-input" type="text" formControlName="email" name="email" />
+  <div
+    class="errors"
+    *ngIf="
+      !userForm.controls.email.valid &&
+      (userForm.controls.email.dirty || userForm.controls.email.touched)
+    "
+  >
+    <p *ngIf="userForm.controls.email.errors.required">Email is required.</p>
+    <p *ngIf="userForm.controls.email.errors.email">
+      Email address is invalid.
+    </p>
+  </div>
+
+  <label for="type-input">Type</label>
+  <select id="type-input" formControlName="type" name="type">
+    <option [ngValue]="o" *ngFor="let o of userTypes">
+      {{ o }}
+    </option>
+  </select>
+  <div
+    class="errors"
+    *ngIf="
+      !userForm.controls.type.valid &&
+      (userForm.controls.type.dirty || userForm.controls.type.touched)
+    "
+  >
+    <p *ngIf="userForm.controls.type.errors.required">User type is required.</p>
+  </div>
+
+  <label for="password-input">Password</label>
+  <input
+    id="password-input"
+    type="password"
+    formControlName="password"
+    name="password"
+  />
+  <div
+    class="errors"
+    *ngIf="
+      !userForm.controls.password.valid &&
+      (userForm.controls.password.dirty || userForm.controls.password.touched)
+    "
+  >
+    <p *ngIf="userForm.controls.password.errors.required">
+      Password is required.
+    </p>
+    <p *ngIf="userForm.controls.password.errors.hasOwnProperty('pattern')">
+      Password must have min 5, max 24 characters, upper and lower case, at
+      least one special character.
+    </p>
+  </div>
+
+  <button
+    type="submit"
+    form="user-form"
+    [disabled]="!userForm.valid || submitting"
+  >
+    Submit
+  </button>
+</form>
